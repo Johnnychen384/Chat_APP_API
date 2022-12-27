@@ -1,0 +1,26 @@
+# Python-specific files
+*.pyc
+__pycache__/
+
+# Packages
+*.egg-info
+*.egg
+
+# Environments
+.env
+
+# Virtual environment
+venv/
+
+# Dependency directories
+.tox/
+dist/
+build/
+
+# IDEs and editors
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Jupyter
+.ipynb_checkpoints/
