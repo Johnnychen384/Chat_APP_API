@@ -126,7 +126,7 @@ def add_message(request):
 
 # function to get all messages that happened between 2 users.
 def all_messages(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = json.loads(request.body)
         my_id = data['my_id']
         other_id = data['other_id']
