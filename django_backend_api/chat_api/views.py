@@ -9,7 +9,7 @@ from django.http import JsonResponse
 import json
 
 
-# for creating a new user
+
 def create_user(request):
     if request.method == 'POST':
 
@@ -23,7 +23,7 @@ def create_user(request):
 
         return JsonResponse({'id': id, 'username': username, 'password': password})
 
-# login function
+
 def check_user(request):
     if request.method == 'POST':
 
@@ -59,49 +59,60 @@ def edit_user(request):
 def online_users(request):
     if request.method == 'GET':
         allUsers = User.objects.all()
+        # grabs all users
         allUsersList = []
+        #returns them into an empty array
 
         for obj in allUsers:
             allUsersList.append({'id': obj.id, 'username': obj.username})
-
+#loop through all user objects and pass them into the allUsersList with all data from obj
         return JsonResponse(allUsersList, safe=False)
+#safe=False basically means u can only pass object type data
 
 # function that allows users to add others to Buddy table.
+#when u click add, it basically 
 def add_buddy(request):
     if request.method == 'POST':
         usersID = json.loads(request.body)
-        
+        #object that contains user_1(ours) + user_2(adding)
         user_1 = User.objects.get(id=usersID['user1'])
         user_2 = User.objects.get(id=usersID['user2'])
         
+        #create a new buddy object ---->
         new_buddy = Buddy(user1=user_1, user2=user_2, active=True)
         new_buddy.save()
 
+#once created go grab the added buddy and return an object
         target_buddy = Buddy.objects.get(id=new_buddy.id)
 
         return JsonResponse({'id': target_buddy.id, 'user1': target_buddy.user1.id, 'user2': target_buddy.user2.id, 'active': target_buddy.active})
 
 # function to delete a user from buddy list
+
 def delete_buddy(request):
     if request.method == 'DELETE':
         data = json.loads(request.body)
         buddy_id = data['id']
         target_buddy = Buddy.objects.get(id=buddy_id)
+        #will target what row to delete and then return an empty object
 
         target_buddy.delete()
         return JsonResponse({})
 
-# function that gets a users buddylist
+# function that gets a users buddylist constantly
 def get_buddies(request):
     if request.method == 'GET':
         data = json.loads(request.body)
-        target_id = data['id']
+        target_id = data['id'] 
+        #            our id ^^^
 
         all_buddies = Buddy.objects.all()
+        #grabs every object inside buddy table
         my_buddies = []
         for obj in all_buddies:
             # print(obj.user1.id)
             if obj.user1.id == target_id:
+                #if our id matches it'll send that array back
                 my_buddies.append({'id': obj.user2.id, 'username': obj.user2.username})
                 # my_buddies.append(obj)
             else:
@@ -112,6 +123,7 @@ def get_buddies(request):
 # function that will add new message to Message table
 def add_message(request):
     if request.method == "POST":
+        #listens for a post request
         data = json.loads(request.body)
 
         user1 = data['user1']
@@ -119,7 +131,7 @@ def add_message(request):
         message = data['message']
 
         the_message = Message(sender=User.objects.get(id=user1), recipient=User.objects.get(id=user2), message=message)
-
+        #pass in the whole user object + the message
         the_message.save()
 
         return JsonResponse({'id': the_message.id, 'sender': the_message.sender.id, 'recipient': the_message.recipient.id, 'message': the_message.message})
