@@ -90,18 +90,17 @@ def add_buddy(request):
 # function to delete a user from buddy list
 
 def delete_buddy(request):
-    if request.method == 'DELETE':
+    if request.method == 'POST':
         data = json.loads(request.body)
         buddy_id = data['id']
-        target_buddy = Buddy.objects.get(id=buddy_id)
-        #will target what row to delete and then return an empty object
+        target_buddy = Buddy.objects.get(user2=buddy_id)
 
         target_buddy.delete()
         return JsonResponse({})
 
 # function that gets a users buddylist constantly
 def get_buddies(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = json.loads(request.body)
         target_id = data['id'] 
         #            our id ^^^
@@ -138,7 +137,7 @@ def add_message(request):
 
 # function to get all messages that happened between 2 users.
 def all_messages(request):
-    if request.method == 'GET':
+    if request.method == 'POST':
         data = json.loads(request.body)
         my_id = data['my_id']
         other_id = data['other_id']
