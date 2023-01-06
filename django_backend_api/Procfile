@@ -1,0 +1,2 @@
+web: gunicorn django_backend_api.wsgi
+DJANGO_SETTINGS_MODULE=django_backend_api.settings
