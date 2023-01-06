@@ -92,9 +92,8 @@ def add_buddy(request):
 def delete_buddy(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        my_id = data['my_id']
         buddy_id = data['id']
-        target_buddy = Buddy.objects.get(user1=my_id, user2=buddy_id)
+        target_buddy = Buddy.objects.get(user2=buddy_id)
 
         target_buddy.delete()
         return JsonResponse({})
