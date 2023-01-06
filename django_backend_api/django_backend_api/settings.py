@@ -36,7 +36,7 @@ SECRET_KEY = secret_key
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'dry-retreat-68955.herokuapp.com/']
+ALLOWED_HOSTS = []
 
 
 
