@@ -28,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) 
 
 
-# Quick-start development settings - unsuitable for production
+# Quick-start development settings - unsuitable for productionn
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
